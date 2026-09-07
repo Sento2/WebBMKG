@@ -3,11 +3,20 @@
 namespace App\Services;
 
 use App\Models\LayananPtsp;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class LayananPtspService
 {
+    /**
+     * Ambil semua permohonan PTSP, terbaru di atas.
+     */
+    public function getAll(): Collection
+    {
+        return LayananPtsp::orderBy('created_at', 'desc')->get();
+    }
+
     /**
      * Submit permohonan PTSP baru.
      *
@@ -36,5 +45,22 @@ class LayananPtspService
             'kode_tiket' => $kodeTiket,
             'permohonan' => $permohonan,
         ];
+    }
+
+    /**
+     * Update status permohonan PTSP oleh admin.
+     */
+    public function updateStatus(int $id, string $status): ?LayananPtsp
+    {
+        $permohonan = LayananPtsp::find($id);
+
+        if (! $permohonan) {
+            return null;
+        }
+
+        $permohonan->status_permohonan = $status;
+        $permohonan->save();
+
+        return $permohonan;
     }
 }

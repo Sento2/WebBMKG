@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use GuzzleHttp\Client;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        RateLimiter::for('ptsp-submit', function (Request $request) {
+            // Batasi 3 permohonan per jam per IP Address
+            return Limit::perHour(3)->by($request->ip());
+        });
     }
 }
