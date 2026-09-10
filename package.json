@@ -6,8 +6,14 @@
         "build": "vite build",
         "dev": "vite"
     },
+    "dependencies": {
+        "lucide-react": "^1.16.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
+        "@vitejs/plugin-react": "^4.3.4",
         "concurrently": "^10.0.3",
         "laravel-vite-plugin": "^3.1",
         "tailwindcss": "^4.0.0",
